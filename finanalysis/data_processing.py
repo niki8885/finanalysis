@@ -15,13 +15,17 @@ def calculate_log_returns(prices):
     return prices
 
 
-def calculate_trading_volume(prices):
+def calculate_trading_volume(prices, multi=False):
     trading_volume = (
         prices
         .assign(Trading_volume=lambda x: (x["Volume"] * x["Adjusted"]) / 1e9)
-        .groupby("Date", as_index=False)
+        .groupby(["Date", "Ticker"], as_index=False)
         .agg({"Trading_volume": "sum"})
         .assign(Trading_volume_lag=lambda x: x["Trading_volume"].shift(periods=1))
     )
-    trading_volume["Ticker"] = prices["Ticker"].iloc[0]
+
+    if not multi:
+        trading_volume["Ticker"] = prices["Ticker"].iloc[0]
+
     return trading_volume
+

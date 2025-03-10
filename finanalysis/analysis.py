@@ -15,3 +15,9 @@ def returns_statistics(returns, decimal=3, method='total'):
         print("\nYearly Statistics:")
         yearly_stats = returns["Returns"].groupby(returns["Date"].dt.year).describe().round(decimal)
         print(yearly_stats)
+
+def multiple_returns_statistics(returns, decimal=3):
+    start_year, end_year, ticker = scrap_from_prices(returns,multi = True)
+    print(f"Returns statistics for {ticker} from {start_year} to {end_year}")
+    print("\nTotal Statistics:")
+    print(returns.groupby("Ticker")["Returns"].describe().round(decimal))

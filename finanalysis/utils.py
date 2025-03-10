@@ -6,8 +6,12 @@ def current_date():
     return today
 
 
-def scrap_from_prices(prices):
+def scrap_from_prices(prices, multi = False):
+    if multi:
+        ticker = prices["Ticker"].unique()
+        ticker = ', '.join(ticker.tolist())
+    else:
+        ticker = prices["Ticker"].iloc[0]
     start_year = prices["Date"].min().year
     end_year = prices["Date"].max().year
-    ticker = prices["Ticker"].iloc[0]
     return start_year,end_year,ticker

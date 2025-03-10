@@ -46,3 +46,35 @@ def request_prices(ticker,start_date,end_date = current_date(), returns = True):
         return prices
 
 
+def request_multi_prices(tickers, start_date, end_date = current_date(), returns = True):
+    if not tickers:
+        print("No symbols found. Skipping Yahoo Finance request.")
+        return pd.DataFrame()
+
+    prices = yf.download(
+        tickers = tickers,
+        start = start_date,
+        end = end_date,
+        progress = False,
+        auto_adjust = False
+    )
+
+    prices = (prices
+                    .stack(level=1, future_stack=True)
+                    .reset_index()
+                    .rename(columns={"level_1": "Ticker", "Date": "Date",
+                                     "Close": "Close", "Open": "Open",
+                                     "High": "High", "Low": "Low",
+                                     "Adj Close": "Adjusted", "Volume": "Volume"}))
+
+    if returns:
+        prices_returns = (
+            prices
+            .sort_values("Date")
+            .assign(Returns=lambda x: x.groupby("Ticker")["Adjusted"].pct_change(fill_method=None))
+            .loc[:, ["Date", "Ticker", "Open", "High", "Low", "Close", "Adjusted", "Returns", "Volume"]]
+            .dropna(subset=["Returns"])
+        )
+        return prices_returns
+    else:
+        return prices
