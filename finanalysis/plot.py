@@ -32,16 +32,25 @@ def returns_plot(returns):
     fig.show()
 
 
-def trading_volume_plot(trading_volume):
+def trading_volume_plot(trading_volume, persistence = False):
     start_year, end_year, ticker = scrap_from_prices(trading_volume)
-    plot_title = f"Daily trading volume of {ticker} from {start_year} to {end_year}"
 
-    trading_volume_figure = (
-        ggplot(trading_volume, aes(x="Date", y="Trading_volume")) +
-        geom_line() +
-        labs(x="", y="Trading Volume", title=plot_title) +
-        scale_x_datetime(date_breaks="5 years", date_labels="%Y")
-    )
+    if persistence:
+        plot_title = f"Persistence in daily trading volume of {ticker} from {start_year} to {end_year}"
+        trading_volume_figure = (
+                ggplot(trading_volume, aes(x="Trading_volume_lag", y="Trading_volume")) +
+                geom_point() +
+                geom_abline(intercept=0, slope=1, linetype="dashed") +
+                labs(x="Previous day aggregate trading volume", y="Aggregate trading volume", title=plot_title)
+        )
+    else:
+        plot_title = f"Daily trading volume of {ticker} from {start_year} to {end_year}"
+        trading_volume_figure = (
+                ggplot(trading_volume, aes(x="Date", y="Trading_volume")) +
+                geom_line() +
+                labs(x="", y="Trading Volume", title=plot_title) +
+                scale_x_datetime(date_breaks="5 years", date_labels="%Y")
+        )
 
     fig = trading_volume_figure.draw()
     fig.show()

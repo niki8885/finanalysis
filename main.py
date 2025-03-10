@@ -11,5 +11,6 @@ finanalysis.returns_statistics(price,method = "by year")
 finanalysis.returns_plot(price)
 finanalysis.price_plot(price)
 trade_volume = finanalysis.calculate_trading_volume(price)
-print(trade_volume)
+
 finanalysis.trading_volume_plot(trade_volume)
+finanalysis.trading_volume_plot(trade_volume, persistence = True)
