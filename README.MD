@@ -8,8 +8,8 @@ FinAnalysis is a Python package designed to fetch, analyze, and visualize stock 
 - Generate plots for stock prices, returns distributions, and trading volume.
 - Fetch and process Fama-French, Q-Factor, and CPI data.
 - Merge financial factors with stock data for deeper analysis.
-- Calculate Value at Risk (VaR) using historical and parametric methods.
-- Visualize VaR levels on return histograms.
+- Calculate Value at Risk (VaR) and CVaR using historical and parametric methods.
+- Visualize VaR & CVaR levels on return histograms.
 
 ## Installation
 Install the required dependencies:
@@ -26,7 +26,7 @@ finanalysis/
 │── plot.py                # Visualization functions using plotnine
 │── request_data.py        # Fetch stock data from Yahoo Finance and external sources
 │── fin_data.py            # Fetch and process Fama-French, Q-Factor, and CPI data
-│── risk.py                # Calculate Value at Risk (VaR) using historical and parametric methods.
+│── risk.py                # Calculate Value at Risk (VaR) and CVaR using historical and parametric methods.
 │── utils.py               # Utility functions
 main.py                    # Example script to run analysis
 requirements.txt           # List of dependencies
