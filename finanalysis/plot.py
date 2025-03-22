@@ -8,7 +8,7 @@ def price_plot(prices, multi=False):
     else:
         start_year, end_year, ticker = scrap_from_prices(prices)
 
-    plot_title = f"{ticker} stock prices from {start_year} to {end_year}"
+    plot_title = f"{ticker} stock prices \nfrom {start_year} to {end_year}"
 
     plot = (
         ggplot(prices, aes(x="Date", y="Adjusted", color="Ticker")) +
@@ -25,7 +25,7 @@ def returns_plot(returns, multi = False):
         start_year, end_year, ticker = scrap_from_prices(returns, multi=True)
     else:
         start_year, end_year, ticker = scrap_from_prices(returns)
-    plot_title = f"Distribution of daily {ticker} stock returns from {start_year} to {end_year}"
+    plot_title = f"Distribution of daily {ticker} stock returns \nfrom {start_year} to {end_year}"
 
     quantile_05 = returns["Returns"].quantile(0.05)
 
@@ -45,7 +45,7 @@ def trading_volume_plot(trading_volume, persistence = False, multi = False):
     else:
         start_year, end_year, ticker = scrap_from_prices(trading_volume)
     if persistence:
-        plot_title = f"Persistence in daily trading volume of {ticker} from {start_year} to {end_year}"
+        plot_title = f"Persistence in daily trading volume of {ticker} \nfrom {start_year} to {end_year}"
         trading_volume_figure = (
                 ggplot(trading_volume, aes(x="Trading_volume_lag", y="Trading_volume", color="Ticker")) +
                 geom_point() +
@@ -53,7 +53,7 @@ def trading_volume_plot(trading_volume, persistence = False, multi = False):
                 labs(x="Previous day aggregate trading volume", y="Aggregate trading volume", title=plot_title)
         )
     else:
-        plot_title = f"Daily trading volume of {ticker} from {start_year} to {end_year}"
+        plot_title = f"Daily trading volume of {ticker} \nfrom {start_year} to {end_year}"
         trading_volume_figure = (
                 ggplot(trading_volume, aes(x="Date", y="Trading_volume", color="Ticker")) +
                 geom_line() +
